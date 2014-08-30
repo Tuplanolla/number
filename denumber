@@ -1,0 +1,17 @@
+#! /usr/bin/env ruby
+
+ignore = [0, ARGV[0].to_i].max
+separator = ARGV[1] || " \u00a0 "
+$stdin.each_line do |line|
+	match = line.match /^(#+)(\s*)[0-9]+(?:\.[0-9]+)*#{separator}(.*)$/
+	if match
+		depth = match[1].length
+		if depth > ignore
+			puts match[1 .. 2].join + match[3]
+		else
+			puts line
+		end
+	else
+		puts line
+	end
+end

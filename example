@@ -1,0 +1,22 @@
+#! /bin/sh
+
+case $1 in
+	default)
+		cat test.md | ./number
+		;;
+	subsections)
+		cat test.md | ./number 1 "   "
+		;;
+	parts)
+		cat test.md | ./number 0 "   " | ./denumber 1 "   "
+		;;
+	nothing)
+		cat test.md | ./number | ./denumber
+		;;
+	*)
+		echo "Usage: $0 [default | subsections | parts | nothing]"
+		exit 1
+		;;
+esac
+
+exit 0

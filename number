@@ -1,0 +1,28 @@
+#! /usr/bin/env ruby
+
+ignore = [0, ARGV[0].to_i].max
+separator = ARGV[1] || " \u00a0 "
+numbers = []
+$stdin.each_line do |line|
+	match = line.match /^(#+)(\s*)(.*)$/
+	if match
+		previous_depth = numbers.length
+		depth = match[1].length
+		if depth > previous_depth
+			numbers.fill 0, previous_depth .. depth - 1
+		else
+			numbers = numbers[0 .. depth - 1]
+		end
+		numbers[depth - 1] += 1
+		if depth > ignore
+			puts match[1 .. 2].join +
+				numbers.drop(ignore).join('.') +
+				separator +
+				match[3]
+		else
+			puts line
+		end
+	else
+		puts line
+	end
+end
